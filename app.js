@@ -26,6 +26,7 @@ function setupEventListeners() {
     // Auth Forms
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
     document.getElementById('registerForm').addEventListener('submit', handleRegister);
+    document.getElementById('forgotPasswordForm').addEventListener('submit', handleForgotPassword);
     
     // Auth Buttons
     document.getElementById('loginBtn').addEventListener('click', showLoginForm);
@@ -75,12 +76,21 @@ function showUserContent() {
 function showLoginForm() {
     document.getElementById('loginForm').style.display = 'block';
     document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('forgotPasswordForm').style.display = 'none';
 }
 
 // Register Form anzeigen
 function showRegisterForm() {
     document.getElementById('loginForm').style.display = 'none';
     document.getElementById('registerForm').style.display = 'block';
+    document.getElementById('forgotPasswordForm').style.display = 'none';
+}
+
+// Forgot Password Form anzeigen
+function showForgotPassword() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('forgotPasswordForm').style.display = 'block';
 }
 
 // Login verarbeiten
@@ -171,6 +181,31 @@ async function logout() {
     } catch (error) {
         console.error('Logout error:', error);
         showMessage('Ein Fehler ist aufgetreten.', 'error');
+    }
+}
+
+// Passwort vergessen verarbeiten
+async function handleForgotPassword(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('forgotEmail').value;
+    
+    try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: 'https://11koelsch.netlify.app/reset-password'
+        });
+        
+        if (error) {
+            showMessage('Fehler beim Senden der E-Mail: ' + error.message, 'error');
+            return;
+        }
+        
+        showMessage('Passwort-Reset-E-Mail wurde gesendet! Bitte überprüfe dein E-Mail-Postfach.', 'success');
+        showLoginForm();
+        
+    } catch (error) {
+        console.error('Forgot password error:', error);
+        showMessage('Ein Fehler ist aufgetreten. Bitte versuche es erneut.', 'error');
     }
 }
 
