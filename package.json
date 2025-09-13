@@ -1,0 +1,24 @@
+{
+  "name": "11koelsch-web",
+  "version": "1.0.0",
+  "description": "11Kölsch Web - Official website for the 11Kölsch iOS app",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Static site - no build needed'",
+    "start": "echo 'Static site - serve with any web server'"
+  },
+  "keywords": [
+    "koelsch",
+    "beer",
+    "website",
+    "supabase",
+    "pwa"
+  ],
+  "author": "11Kölsch Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dsccaa/11koelsch-web.git"
+  },
+  "homepage": "https://11koelsch.netlify.app"
+}
