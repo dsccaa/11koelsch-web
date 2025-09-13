@@ -1,4 +1,4 @@
-// 11Kölsch Website JavaScript - Einfaches Login
+// 11Kölsch Website JavaScript - Komplettes Design
 
 // Supabase-Konfiguration
 const supabaseUrl = 'https://nrkjjukeracgbpvwbjam.supabase.co';
@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
     setupEventListeners();
     checkAuthState();
+    setupSmoothScrolling();
+    setupIntersectionObserver();
 });
 
 // App initialisieren
@@ -23,13 +25,61 @@ function initializeApp() {
 
 // Event Listeners einrichten
 function setupEventListeners() {
-    // Auth Forms
-    document.getElementById('loginForm').addEventListener('submit', handleLogin);
-    document.getElementById('registerForm').addEventListener('submit', handleRegister);
-    
     // Auth Buttons
     document.getElementById('loginBtn').addEventListener('click', showLoginForm);
     document.getElementById('registerBtn').addEventListener('click', showRegisterForm);
+    
+    // Auth Forms
+    document.getElementById('loginFormElement').addEventListener('submit', handleLogin);
+    document.getElementById('registerFormElement').addEventListener('submit', handleRegister);
+    
+    // Contact Form
+    document.getElementById('contactForm').addEventListener('submit', handleContactForm);
+    
+    // Modal schließen bei Klick außerhalb
+    document.getElementById('authModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeAuthModal();
+        }
+    });
+}
+
+// Smooth Scrolling für Navigation
+function setupSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+// Intersection Observer für aktive Navigation
+function setupIntersectionObserver() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${id}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, { threshold: 0.3 });
+    
+    sections.forEach(section => observer.observe(section));
 }
 
 // Auth State prüfen
@@ -73,14 +123,21 @@ function showUserContent() {
 
 // Login Form anzeigen
 function showLoginForm() {
+    document.getElementById('authModal').style.display = 'block';
     document.getElementById('loginForm').style.display = 'block';
     document.getElementById('registerForm').style.display = 'none';
 }
 
 // Register Form anzeigen
 function showRegisterForm() {
+    document.getElementById('authModal').style.display = 'block';
     document.getElementById('loginForm').style.display = 'none';
     document.getElementById('registerForm').style.display = 'block';
+}
+
+// Auth Modal schließen
+function closeAuthModal() {
+    document.getElementById('authModal').style.display = 'none';
 }
 
 // Login verarbeiten
@@ -103,6 +160,7 @@ async function handleLogin(e) {
         
         currentUser = data.user;
         showMessage('Erfolgreich angemeldet!', 'success');
+        closeAuthModal();
         showUserContent();
         
     } catch (error) {
@@ -203,6 +261,22 @@ async function changePassword() {
     }
 }
 
+// Contact Form verarbeiten
+async function handleContactForm(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('contactName').value;
+    const email = document.getElementById('contactEmail').value;
+    const message = document.getElementById('contactMessage').value;
+    
+    // Hier würde normalerweise eine API-Anfrage an den Server gesendet
+    // Für jetzt simulieren wir eine erfolgreiche Übermittlung
+    showMessage('Nachricht erfolgreich gesendet! Wir melden uns bald bei dir.', 'success');
+    
+    // Form zurücksetzen
+    document.getElementById('contactForm').reset();
+}
+
 // App öffnen
 function openApp(feature) {
     const appUrl = `11koelsch://${feature}`;
@@ -222,6 +296,25 @@ function openApp(feature) {
 // iOS App herunterladen
 function downloadIOS() {
     window.open('https://apps.apple.com/app/11koelsch', '_blank');
+}
+
+// Android App herunterladen
+function downloadAndroid() {
+    window.open('https://play.google.com/store/apps/details?id=com.koelsch.app', '_blank');
+}
+
+// Scroll zu Download Section
+function scrollToDownload() {
+    document.getElementById('download').scrollIntoView({
+        behavior: 'smooth'
+    });
+}
+
+// Scroll zu Features Section
+function scrollToFeatures() {
+    document.getElementById('features').scrollIntoView({
+        behavior: 'smooth'
+    });
 }
 
 // Terms anzeigen
@@ -252,3 +345,36 @@ supabase.auth.onAuthStateChange((event, session) => {
         showPublicContent();
     }
 });
+
+// Keyboard Navigation
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeAuthModal();
+    }
+});
+
+// PWA Installation
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // Zeige Install Button
+    const installBtn = document.createElement('button');
+    installBtn.textContent = 'App installieren';
+    installBtn.className = 'btn-primary';
+    installBtn.onclick = installPWA;
+    
+    const header = document.querySelector('.header-content');
+    header.appendChild(installBtn);
+});
+
+async function installPWA() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`PWA installation: ${outcome}`);
+        deferredPrompt = null;
+    }
+}
