@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
     setupEventListeners();
     checkAuthState();
+    checkCookieConsent();
 });
 
 // App initialisieren
@@ -27,10 +28,6 @@ function setupEventListeners() {
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
     document.getElementById('registerForm').addEventListener('submit', handleRegister);
     document.getElementById('forgotPasswordForm').addEventListener('submit', handleForgotPassword);
-    
-    // Auth Buttons
-    document.getElementById('loginBtn').addEventListener('click', showLoginForm);
-    document.getElementById('registerBtn').addEventListener('click', showRegisterForm);
 }
 
 // Auth State prüfen
@@ -54,21 +51,19 @@ async function checkAuthState() {
 function showPublicContent() {
     document.getElementById('publicContent').style.display = 'block';
     document.getElementById('userContent').style.display = 'none';
-    document.getElementById('navButtons').style.display = 'flex';
-    document.getElementById('userMenu').style.display = 'none';
 }
 
 // User Content anzeigen
 function showUserContent() {
     document.getElementById('publicContent').style.display = 'none';
     document.getElementById('userContent').style.display = 'block';
-    document.getElementById('navButtons').style.display = 'none';
-    document.getElementById('userMenu').style.display = 'flex';
     
     if (currentUser) {
-        document.getElementById('userEmail').textContent = currentUser.email;
         document.getElementById('userEmailDisplay').textContent = currentUser.email;
-        document.getElementById('userName').textContent = `Willkommen zurück, ${currentUser.email.split('@')[0]}!`;
+        const firstName = currentUser.user_metadata?.first_name || '';
+        const lastName = currentUser.user_metadata?.last_name || '';
+        const displayName = firstName && lastName ? `${firstName} ${lastName}` : currentUser.email.split('@')[0];
+        document.getElementById('userName').textContent = `Willkommen zurück, ${displayName}!`;
     }
 }
 
@@ -125,9 +120,16 @@ async function handleLogin(e) {
 async function handleRegister(e) {
     e.preventDefault();
     
+    const firstName = document.getElementById('registerFirstName').value;
+    const lastName = document.getElementById('registerLastName').value;
     const email = document.getElementById('registerEmail').value;
     const password = document.getElementById('registerPassword').value;
     const confirmPassword = document.getElementById('registerConfirmPassword').value;
+    
+    if (!firstName || !lastName) {
+        showMessage('Bitte gib Vor- und Nachname ein.', 'error');
+        return;
+    }
     
     if (password !== confirmPassword) {
         showMessage('Passwörter stimmen nicht überein.', 'error');
@@ -142,7 +144,13 @@ async function handleRegister(e) {
     try {
         const { data, error } = await supabase.auth.signUp({
             email: email,
-            password: password
+            password: password,
+            options: {
+                data: {
+                    first_name: firstName,
+                    last_name: lastName
+                }
+            }
         });
         
         if (error) {
@@ -259,14 +267,26 @@ function downloadIOS() {
     window.open('https://apps.apple.com/app/11koelsch', '_blank');
 }
 
-// Terms anzeigen
-function showTerms() {
-    alert('Nutzungsbedingungen werden hier angezeigt.');
+// Cookie Consent prüfen
+function checkCookieConsent() {
+    const cookieConsent = localStorage.getItem('cookieConsent');
+    if (!cookieConsent) {
+        document.getElementById('cookieBanner').style.display = 'block';
+    }
 }
 
-// Privacy anzeigen
-function showPrivacy() {
-    alert('Datenschutzerklärung wird hier angezeigt.');
+// Cookies akzeptieren
+function acceptCookies() {
+    localStorage.setItem('cookieConsent', 'accepted');
+    document.getElementById('cookieBanner').style.display = 'none';
+    console.log('Cookies akzeptiert');
+}
+
+// Cookies ablehnen
+function declineCookies() {
+    localStorage.setItem('cookieConsent', 'declined');
+    document.getElementById('cookieBanner').style.display = 'none';
+    console.log('Cookies abgelehnt');
 }
 
 // Nachricht anzeigen
@@ -287,3 +307,8 @@ supabase.auth.onAuthStateChange((event, session) => {
         showPublicContent();
     }
 });
+
+
+
+
+
