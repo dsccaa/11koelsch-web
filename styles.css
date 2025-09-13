@@ -1,4 +1,4 @@
-/* 11Kölsch Website - Komplettes Design */
+/* 11Kölsch Website - Dunkles Design */
 
 /* Reset und Base Styles */
 * {
@@ -9,7 +9,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    background: #000000;
     color: #ffffff;
     min-height: 100vh;
     line-height: 1.6;
@@ -47,30 +47,8 @@ body {
     color: #ff4444;
 }
 
-.nav {
-    display: flex;
-    gap: 2rem;
-}
-
-.nav-link {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-    color: #ff4444;
-}
-
 .nav-buttons {
     display: flex;
-    gap: 1rem;
-}
-
-.user-menu {
-    display: flex;
-    align-items: center;
     gap: 1rem;
 }
 
@@ -123,244 +101,47 @@ body {
 /* Main Content */
 .main {
     margin-top: 80px;
-}
-
-/* Hero Section */
-.hero {
-    padding: 6rem 0;
-    display: flex;
-    align-items: center;
     min-height: calc(100vh - 80px);
-    gap: 4rem;
 }
 
-.hero-content {
-    flex: 1;
-    max-width: 600px;
-}
-
-.hero-content h1 {
-    font-size: 3.5rem;
-    font-weight: bold;
-    color: #ff4444;
-    margin-bottom: 1.5rem;
-    line-height: 1.2;
-}
-
-.hero-content p {
-    font-size: 1.3rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 2.5rem;
-    line-height: 1.6;
-}
-
-.hero-buttons {
+/* Login/Register Section */
+.auth-section {
     display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.hero-image {
-    flex: 1;
-    display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 80px);
+    padding: 2rem 0;
 }
 
-.phone-mockup {
-    width: 300px;
-    height: 600px;
-    background: #1a1a1a;
-    border-radius: 30px;
-    padding: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    border: 2px solid #333;
-}
-
-.phone-screen {
+.auth-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 3rem;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 400px;
     width: 100%;
-    height: 100%;
-    background: #000;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.app-preview {
     text-align: center;
-    color: white;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-.beer-counter {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-.beer-counter .number {
-    font-size: 4rem;
+.app-title {
+    font-size: 2.5rem;
     font-weight: bold;
     color: #ff4444;
+    margin-bottom: 0.5rem;
 }
 
-.beer-counter .label {
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-/* Features Section */
-.features {
-    padding: 6rem 0;
-    background: rgba(255, 255, 255, 0.02);
-}
-
-.features h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    color: #ff4444;
-    margin-bottom: 3rem;
-}
-
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.feature-card {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 2.5rem;
-    border-radius: 20px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-.feature-icon {
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
-}
-
-.feature-card h3 {
-    font-size: 1.5rem;
-    color: #ff4444;
-    margin-bottom: 1rem;
-}
-
-.feature-card p {
-    color: rgba(255, 255, 255, 0.8);
-    line-height: 1.6;
-}
-
-/* Download Section */
-.download {
-    padding: 6rem 0;
-    text-align: center;
-}
-
-.download h2 {
-    font-size: 2.5rem;
-    color: #ff4444;
-    margin-bottom: 1rem;
-}
-
-.download p {
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 3rem;
-}
-
-.download-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-.download-btn {
-    display: inline-block;
-    transition: transform 0.3s ease;
-}
-
-.download-btn:hover {
-    transform: scale(1.05);
-}
-
-.download-btn img {
-    height: 60px;
-    border-radius: 8px;
-}
-
-/* Contact Section */
-.contact {
-    padding: 6rem 0;
-    background: rgba(255, 255, 255, 0.02);
-}
-
-.contact h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    color: #ff4444;
-    margin-bottom: 3rem;
-}
-
-.contact-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-}
-
-.contact-info h3 {
-    font-size: 1.8rem;
-    color: #ff4444;
-    margin-bottom: 1rem;
-}
-
-.contact-info p {
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 2rem;
+.app-slogan {
     font-size: 1.1rem;
-}
-
-.contact-methods {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.contact-method {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.contact-icon {
-    font-size: 1.5rem;
-}
-
-.contact-form {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #888888;
+    margin-bottom: 2rem;
 }
 
 /* Form Styles */
 .form-group {
     margin-bottom: 1.5rem;
+    text-align: left;
 }
 
 .form-group label {
@@ -370,33 +151,82 @@ body {
     margin-bottom: 0.5rem;
 }
 
-.form-group input,
-.form-group textarea {
+.form-group input {
     width: 100%;
     padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: #333333;
+    border: 1px solid #555555;
     border-radius: 8px;
     color: #ffffff;
     font-size: 1rem;
     transition: all 0.3s ease;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
+.form-group input:focus {
     outline: none;
     border-color: #ff4444;
-    background: rgba(255, 255, 255, 0.15);
+    background: #444444;
 }
 
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+.form-group input::placeholder {
+    color: #888888;
 }
 
-.form-group textarea {
-    resize: vertical;
-    min-height: 120px;
+/* Auth Buttons */
+.auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-login {
+    background: #666666;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    background: #777777;
+}
+
+.btn-register {
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-register:hover {
+    background: #e63939;
+}
+
+/* Legal Text */
+.legal-text {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #888888;
+    line-height: 1.4;
+}
+
+.legal-text a {
+    color: #ff4444;
+    text-decoration: none;
+}
+
+.legal-text a:hover {
+    text-decoration: underline;
 }
 
 /* Profile Section */
@@ -445,7 +275,7 @@ body {
 
 .profile-info p {
     font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: #888888;
     margin-bottom: 1.5rem;
 }
 
@@ -473,7 +303,7 @@ body {
 
 .stat-label {
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: #888888;
 }
 
 .profile-actions {
@@ -490,7 +320,7 @@ body {
 .profile-actions > p {
     text-align: center;
     font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: #888888;
     margin-bottom: 2rem;
 }
 
@@ -527,7 +357,7 @@ body {
 }
 
 .app-features .feature-card p {
-    color: rgba(255, 255, 255, 0.8);
+    color: #888888;
     margin-bottom: 1.5rem;
     line-height: 1.5;
 }
@@ -548,7 +378,7 @@ body {
 }
 
 .app-download p {
-    color: rgba(255, 255, 255, 0.8);
+    color: #888888;
     margin-bottom: 1.5rem;
 }
 
@@ -577,122 +407,25 @@ body {
 /* Footer */
 .footer {
     background: rgba(0, 0, 0, 0.9);
-    padding: 3rem 0 2rem;
+    padding: 2rem 0;
+    text-align: center;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 2rem;
+    color: #888888;
 }
 
-.footer-links {
-    display: flex;
-    gap: 2rem;
+.footer-content p {
+    margin-bottom: 0.5rem;
 }
 
-.footer-links a {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer-links a:hover {
-    color: #ff4444;
-}
-
-.footer-info {
-    text-align: right;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.footer-info a {
+.footer-content a {
     color: #ff4444;
     text-decoration: none;
 }
 
-.footer-info a:hover {
-    text-decoration: underline;
-}
-
-/* Modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    background: rgba(255, 255, 255, 0.1);
-    margin: 5% auto;
-    padding: 2rem;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 500px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    position: relative;
-}
-
-.close {
-    color: #ffffff;
-    float: right;
-    font-size: 2rem;
-    font-weight: bold;
-    cursor: pointer;
-    position: absolute;
-    top: 1rem;
-    right: 1.5rem;
-}
-
-.close:hover {
-    color: #ff4444;
-}
-
-.auth-form h2 {
-    color: #ff4444;
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-.auth-switch {
-    text-align: center;
-    margin-top: 1.5rem;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.auth-switch a {
-    color: #ff4444;
-    text-decoration: none;
-}
-
-.auth-switch a:hover {
-    text-decoration: underline;
-}
-
-.legal-text {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
-    text-align: center;
-    margin-top: 1rem;
-    line-height: 1.4;
-}
-
-.legal-text a {
-    color: #ff4444;
-    text-decoration: none;
-}
-
-.legal-text a:hover {
+.footer-content a:hover {
     text-decoration: underline;
 }
 
@@ -704,50 +437,18 @@ body {
         padding: 1rem;
     }
 
-    .nav {
-        display: none;
-    }
-
     .nav-buttons {
         width: 100%;
         justify-content: center;
     }
 
-    .hero {
-        flex-direction: column;
-        text-align: center;
-        padding: 4rem 0;
+    .auth-card {
+        margin: 1rem;
+        padding: 2rem;
     }
 
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-
-    .hero-buttons {
-        justify-content: center;
-    }
-
-    .phone-mockup {
-        width: 250px;
-        height: 500px;
-    }
-
-    .features-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .contact-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .footer-info {
-        text-align: center;
+    .app-title {
+        font-size: 2rem;
     }
 
     .profile-header {
@@ -774,25 +475,15 @@ body {
         padding: 0 15px;
     }
 
-    .hero-content h1 {
-        font-size: 2rem;
+    .auth-card {
+        padding: 1.5rem;
     }
 
-    .hero-content p {
-        font-size: 1.1rem;
-    }
-
-    .phone-mockup {
-        width: 200px;
-        height: 400px;
+    .app-title {
+        font-size: 1.8rem;
     }
 
     .profile-info h1 {
         font-size: 2rem;
-    }
-
-    .modal-content {
-        margin: 10% auto;
-        padding: 1.5rem;
     }
 }

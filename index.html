@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>11Kölsch - Die ultimative Kölsch-App</title>
+    <title>11Kölsch - Bier trinken mit Freunden</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <meta name="theme-color" content="#ff4444">
-    <meta name="description" content="11Kölsch - Die ultimative App für Kölsch-Liebhaber. Tracke deine Kölsch, finde Locations und verbinde dich mit Freunden.">
+    <meta name="description" content="11Kölsch - Die ultimative App für Kölsch-Liebhaber. Bier trinken mit Freunden.">
 </head>
 <body>
     <!-- Header -->
@@ -15,12 +15,6 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">11Kölsch</div>
-                <nav class="nav">
-                    <a href="#home" class="nav-link">Home</a>
-                    <a href="#features" class="nav-link">Features</a>
-                    <a href="#download" class="nav-link">Download</a>
-                    <a href="#contact" class="nav-link">Kontakt</a>
-                </nav>
                 <div class="nav-buttons" id="navButtons">
                     <button class="btn-primary" id="loginBtn">Anmelden</button>
                     <button class="btn-secondary" id="registerBtn">Registrieren</button>
@@ -37,117 +31,50 @@
     <main class="main">
         <!-- Public Content (for non-logged users) -->
         <div id="publicContent">
-            <!-- Hero Section -->
-            <section id="home" class="hero">
-                <div class="hero-content">
-                    <h1>Die ultimative Kölsch-App</h1>
-                    <p>Tracke deine Kölsch, finde die besten Locations und verbinde dich mit anderen Kölsch-Liebhabern.</p>
-                    <div class="hero-buttons">
-                        <button class="btn-primary large" onclick="scrollToDownload()">App herunterladen</button>
-                        <button class="btn-secondary large" onclick="scrollToFeatures()">Mehr erfahren</button>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <div class="phone-mockup">
-                        <div class="phone-screen">
-                            <div class="app-preview">
-                                <div class="beer-counter">
-                                    <span class="number">11</span>
-                                    <span class="label">Kölsch getrunken</span>
-                                </div>
+            <section class="auth-section">
+                <div class="container">
+                    <div class="auth-card">
+                        <div class="app-title">11Kölsch</div>
+                        <div class="app-slogan">Bier trinken mit Freunden</div>
+                        
+                        <!-- Login Form -->
+                        <form id="loginForm" class="auth-form">
+                            <div class="form-group">
+                                <label for="loginEmail">E-Mail</label>
+                                <input type="email" id="loginEmail" placeholder="ihre@email.de" required>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Features Section -->
-            <section id="features" class="features">
-                <div class="container">
-                    <h2>Features</h2>
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon">🍺</div>
-                            <h3>Kölsch Tracking</h3>
-                            <p>Verfolge deine Kölsch-Konsum und erreiche Meilensteine</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🗺️</div>
-                            <h3>Location Finder</h3>
-                            <p>Finde die besten Kölsch-Locations in deiner Nähe</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">👥</div>
-                            <h3>Freunde & Community</h3>
-                            <p>Verbinde dich mit anderen Kölsch-Liebhabern</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">📊</div>
-                            <h3>Statistiken</h3>
-                            <p>Detaillierte Analysen deiner Kölsch-Journey</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🏆</div>
-                            <h3>Achievements</h3>
-                            <p>Sammle Abzeichen und erreiche Meilensteine</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">📱</div>
-                            <h3>Offline Ready</h3>
-                            <p>Funktioniert auch ohne Internetverbindung</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Download Section -->
-            <section id="download" class="download">
-                <div class="container">
-                    <h2>App herunterladen</h2>
-                    <p>Lade die 11Kölsch App herunter und starte deine Kölsch-Journey</p>
-                    <div class="download-buttons">
-                        <a href="#" class="download-btn ios" onclick="downloadIOS()">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iNDAiIHJ4PSI4IiBmaWxsPSIjMDAwMDAwIi8+PHRleHQgeD0iNjAiIHk9IjI1IiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiPkRvd25sb2FkIGZvciBpT1M8L3RleHQ+PC9zdmc+" alt="Download for iOS">
-                        </a>
-                        <a href="#" class="download-btn android" onclick="downloadAndroid()">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iNDAiIHJ4PSI4IiBmaWxsPSIjMDAwMDAwIi8+PHRleHQgeD0iNjAiIHk9IjI1IiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiPkRvd25sb2FkIGZvciBBbmRyb2lkPC90ZXh0Pjwvc3ZnPg==" alt="Download for Android">
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Contact Section -->
-            <section id="contact" class="contact">
-                <div class="container">
-                    <h2>Kontakt</h2>
-                    <div class="contact-content">
-                        <div class="contact-info">
-                            <h3>Hast du Fragen?</h3>
-                            <p>Wir helfen dir gerne weiter!</p>
-                            <div class="contact-methods">
-                                <div class="contact-method">
-                                    <span class="contact-icon">📧</span>
-                                    <span>support@11koelsch.de</span>
-                                </div>
-                                <div class="contact-method">
-                                    <span class="contact-icon">🐦</span>
-                                    <span>@11koelsch</span>
-                                </div>
+                            <div class="form-group">
+                                <label for="loginPassword">Passwort</label>
+                                <input type="password" id="loginPassword" placeholder="Passwort" required>
                             </div>
-                        </div>
-                        <div class="contact-form">
-                            <form id="contactForm">
-                                <div class="form-group">
-                                    <input type="text" id="contactName" placeholder="Dein Name" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" id="contactEmail" placeholder="Deine E-Mail" required>
-                                </div>
-                                <div class="form-group">
-                                    <textarea id="contactMessage" placeholder="Deine Nachricht" rows="5" required></textarea>
-                                </div>
-                                <button type="submit" class="btn-primary">Nachricht senden</button>
-                            </form>
+                            <div class="auth-buttons">
+                                <button type="submit" class="btn-login">Anmelden</button>
+                                <button type="button" class="btn-register" onclick="showRegisterForm()">Registrieren</button>
+                            </div>
+                        </form>
+
+                        <!-- Register Form -->
+                        <form id="registerForm" class="auth-form" style="display: none;">
+                            <div class="form-group">
+                                <label for="registerEmail">E-Mail</label>
+                                <input type="email" id="registerEmail" placeholder="ihre@email.de" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="registerPassword">Passwort</label>
+                                <input type="password" id="registerPassword" placeholder="Passwort" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="registerConfirmPassword">Passwort bestätigen</label>
+                                <input type="password" id="registerConfirmPassword" placeholder="Passwort bestätigen" required>
+                            </div>
+                            <div class="auth-buttons">
+                                <button type="submit" class="btn-register">Registrieren</button>
+                                <button type="button" class="btn-login" onclick="showLoginForm()">Anmelden</button>
+                            </div>
+                        </form>
+
+                        <div class="legal-text">
+                            Mit der Anmeldung akzeptierst du unsere <a href="#" onclick="showTerms()">Nutzungsbedingungen</a> und <a href="#" onclick="showPrivacy()">Datenschutz</a>.
                         </div>
                     </div>
                 </div>
@@ -239,71 +166,11 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-links">
-                    <a href="#home">Home</a>
-                    <a href="#features">Features</a>
-                    <a href="#download">Download</a>
-                    <a href="#contact">Kontakt</a>
-                </div>
-                <div class="footer-info">
-                    <p>&copy; 2024 11Kölsch. Alle Rechte vorbehalten.</p>
-                    <p><a href="mailto:support@11koelsch.de">support@11koelsch.de</a></p>
-                </div>
+                <p>&copy; 2024 11Kölsch. Alle Rechte vorbehalten.</p>
+                <p><a href="mailto:support@11koelsch.de">support@11koelsch.de</a></p>
             </div>
         </div>
     </footer>
-
-    <!-- Auth Modal -->
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeAuthModal()">&times;</span>
-            
-            <!-- Login Form -->
-            <div id="loginForm" class="auth-form">
-                <h2>Anmelden</h2>
-                <form id="loginFormElement">
-                    <div class="form-group">
-                        <label for="loginEmail">E-Mail</label>
-                        <input type="email" id="loginEmail" placeholder="ihre@email.de" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword">Passwort</label>
-                        <input type="password" id="loginPassword" placeholder="Passwort" required>
-                    </div>
-                    <button type="submit" class="btn-primary">Anmelden</button>
-                </form>
-                <p class="auth-switch">
-                    Noch kein Account? <a href="#" onclick="showRegisterForm()">Registrieren</a>
-                </p>
-            </div>
-
-            <!-- Register Form -->
-            <div id="registerForm" class="auth-form" style="display: none;">
-                <h2>Registrieren</h2>
-                <form id="registerFormElement">
-                    <div class="form-group">
-                        <label for="registerEmail">E-Mail</label>
-                        <input type="email" id="registerEmail" placeholder="ihre@email.de" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerPassword">Passwort</label>
-                        <input type="password" id="registerPassword" placeholder="Passwort" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerConfirmPassword">Passwort bestätigen</label>
-                        <input type="password" id="registerConfirmPassword" placeholder="Passwort bestätigen" required>
-                    </div>
-                    <button type="submit" class="btn-primary">Registrieren</button>
-                </form>
-                <p class="auth-switch">
-                    Bereits ein Account? <a href="#" onclick="showLoginForm()">Anmelden</a>
-                </p>
-                <p class="legal-text">
-                    Mit der Registrierung akzeptierst du unsere <a href="#" onclick="showTerms()">Nutzungsbedingungen</a> und <a href="#" onclick="showPrivacy()">Datenschutz</a>.
-                </p>
-            </div>
-        </div>
-    </div>
 
     <script src="app.js"></script>
 </body>
