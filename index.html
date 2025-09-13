@@ -4,92 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>11Kölsch - Bier trinken mit Freunden</title>
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <meta name="theme-color" content="#ff4444">
     <meta name="description" content="11Kölsch - Die ultimative App für Kölsch-Liebhaber. Bier trinken mit Freunden.">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'koelsch-red': '#ff4444',
+                        'koelsch-dark': '#1a1a1a',
+                        'koelsch-gray': '#333333'
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
+<body class="bg-black text-white min-h-screen">
     <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">11Kölsch</div>
-                <div class="nav-buttons" id="navButtons">
-                    <button class="btn-primary" id="loginBtn">Anmelden</button>
-                    <button class="btn-secondary" id="registerBtn">Registrieren</button>
+    <header class="bg-black/90 backdrop-blur-sm border-b border-white/10 fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="text-2xl font-bold text-koelsch-red">11Kölsch</div>
+                <div class="flex gap-4" id="navButtons">
+                    <button class="bg-koelsch-red hover:bg-red-600 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5" id="loginBtn">Anmelden</button>
+                    <button class="bg-koelsch-gray hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5" id="registerBtn">Registrieren</button>
                 </div>
-                <div class="user-menu" id="userMenu" style="display: none;">
-                    <span id="userEmail"></span>
-                    <button class="btn-secondary" onclick="logout()">Abmelden</button>
+                <div class="flex items-center gap-4" id="userMenu" style="display: none;">
+                    <span id="userEmail" class="text-gray-300"></span>
+                    <button class="bg-koelsch-gray hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300" onclick="logout()">Abmelden</button>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="main">
+    <main class="pt-16 min-h-screen">
         <!-- Public Content (for non-logged users) -->
         <div id="publicContent">
-            <section class="auth-section">
-                <div class="container">
-                    <div class="auth-card">
-                        <div class="app-title">11Kölsch</div>
-                        <div class="app-slogan">Bier trinken mit Freunden</div>
+            <section class="flex items-center justify-center min-h-screen px-4">
+                <div class="w-full max-w-md">
+                    <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-8 shadow-2xl">
+                        <div class="text-center mb-8">
+                            <h1 class="text-4xl font-bold text-koelsch-red mb-2">11Kölsch</h1>
+                            <p class="text-gray-400 text-lg">Bier trinken mit Freunden</p>
+                        </div>
                         
                         <!-- Login Form -->
-                        <form id="loginForm" class="auth-form">
-                            <div class="form-group">
-                                <label for="loginEmail">E-Mail</label>
-                                <input type="email" id="loginEmail" placeholder="ihre@email.de" required>
+                        <form id="loginForm" class="space-y-6">
+                            <div>
+                                <label for="loginEmail" class="block text-sm font-medium text-white mb-2">E-Mail</label>
+                                <input type="email" id="loginEmail" placeholder="ihre@email.de" required
+                                       class="w-full px-4 py-3 bg-koelsch-gray border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-koelsch-red focus:bg-gray-600 transition-all duration-300">
                             </div>
-                            <div class="form-group">
-                                <label for="loginPassword">Passwort</label>
-                                <input type="password" id="loginPassword" placeholder="Passwort" required>
+                            <div>
+                                <label for="loginPassword" class="block text-sm font-medium text-white mb-2">Passwort</label>
+                                <input type="password" id="loginPassword" placeholder="Passwort" required
+                                       class="w-full px-4 py-3 bg-koelsch-gray border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-koelsch-red focus:bg-gray-600 transition-all duration-300">
                             </div>
-                            <div class="form-group">
-                                <a href="#" onclick="showForgotPassword()" class="forgot-password">Passwort vergessen?</a>
+                            <div class="text-right">
+                                <a href="#" onclick="showForgotPassword()" class="text-koelsch-red hover:text-red-400 text-sm transition-colors duration-300">Passwort vergessen?</a>
                             </div>
-                            <div class="auth-buttons">
-                                <button type="submit" class="btn-login">Anmelden</button>
-                                <button type="button" class="btn-register" onclick="showRegisterForm()">Registrieren</button>
+                            <div class="space-y-4">
+                                <button type="submit" class="w-full bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5">Anmelden</button>
+                                <button type="button" onclick="showRegisterForm()" class="w-full bg-koelsch-red hover:bg-red-600 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5">Registrieren</button>
                             </div>
                         </form>
 
                         <!-- Register Form -->
-                        <form id="registerForm" class="auth-form" style="display: none;">
-                            <div class="form-group">
-                                <label for="registerEmail">E-Mail</label>
-                                <input type="email" id="registerEmail" placeholder="ihre@email.de" required>
+                        <form id="registerForm" class="space-y-6" style="display: none;">
+                            <div>
+                                <label for="registerEmail" class="block text-sm font-medium text-white mb-2">E-Mail</label>
+                                <input type="email" id="registerEmail" placeholder="ihre@email.de" required
+                                       class="w-full px-4 py-3 bg-koelsch-gray border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-koelsch-red focus:bg-gray-600 transition-all duration-300">
                             </div>
-                            <div class="form-group">
-                                <label for="registerPassword">Passwort</label>
-                                <input type="password" id="registerPassword" placeholder="Passwort" required>
+                            <div>
+                                <label for="registerPassword" class="block text-sm font-medium text-white mb-2">Passwort</label>
+                                <input type="password" id="registerPassword" placeholder="Passwort" required
+                                       class="w-full px-4 py-3 bg-koelsch-gray border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-koelsch-red focus:bg-gray-600 transition-all duration-300">
                             </div>
-                            <div class="form-group">
-                                <label for="registerConfirmPassword">Passwort bestätigen</label>
-                                <input type="password" id="registerConfirmPassword" placeholder="Passwort bestätigen" required>
+                            <div>
+                                <label for="registerConfirmPassword" class="block text-sm font-medium text-white mb-2">Passwort bestätigen</label>
+                                <input type="password" id="registerConfirmPassword" placeholder="Passwort bestätigen" required
+                                       class="w-full px-4 py-3 bg-koelsch-gray border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-koelsch-red focus:bg-gray-600 transition-all duration-300">
                             </div>
-                            <div class="auth-buttons">
-                                <button type="submit" class="btn-register">Registrieren</button>
-                                <button type="button" class="btn-login" onclick="showLoginForm()">Anmelden</button>
+                            <div class="space-y-4">
+                                <button type="submit" class="w-full bg-koelsch-red hover:bg-red-600 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5">Registrieren</button>
+                                <button type="button" onclick="showLoginForm()" class="w-full bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5">Anmelden</button>
                             </div>
                         </form>
 
                         <!-- Forgot Password Form -->
-                        <form id="forgotPasswordForm" class="auth-form" style="display: none;">
-                            <div class="form-group">
-                                <label for="forgotEmail">E-Mail</label>
-                                <input type="email" id="forgotEmail" placeholder="ihre@email.de" required>
+                        <form id="forgotPasswordForm" class="space-y-6" style="display: none;">
+                            <div>
+                                <label for="forgotEmail" class="block text-sm font-medium text-white mb-2">E-Mail</label>
+                                <input type="email" id="forgotEmail" placeholder="ihre@email.de" required
+                                       class="w-full px-4 py-3 bg-koelsch-gray border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-koelsch-red focus:bg-gray-600 transition-all duration-300">
                             </div>
-                            <div class="auth-buttons">
-                                <button type="submit" class="btn-primary">Passwort zurücksetzen</button>
-                                <button type="button" class="btn-secondary" onclick="showLoginForm()">Zurück zum Login</button>
+                            <div class="space-y-4">
+                                <button type="submit" class="w-full bg-koelsch-red hover:bg-red-600 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5">Passwort zurücksetzen</button>
+                                <button type="button" onclick="showLoginForm()" class="w-full bg-koelsch-gray hover:bg-gray-600 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5">Zurück zum Login</button>
                             </div>
                         </form>
 
-                        <div class="legal-text">
-                            Mit der Anmeldung akzeptierst du unsere <a href="#" onclick="showTerms()">Nutzungsbedingungen</a> und <a href="#" onclick="showPrivacy()">Datenschutz</a>.
+                        <div class="mt-8 text-center">
+                            <p class="text-sm text-gray-400">
+                                Mit der Anmeldung akzeptierst du unsere 
+                                <a href="#" onclick="showTerms()" class="text-koelsch-red hover:text-red-400 transition-colors duration-300">Nutzungsbedingungen</a> 
+                                und 
+                                <a href="#" onclick="showPrivacy()" class="text-koelsch-red hover:text-red-400 transition-colors duration-300">Datenschutz</a>.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -98,78 +124,80 @@
 
         <!-- User Profile Content (for logged users) -->
         <div id="userContent" style="display: none;">
-            <section class="profile-section">
-                <div class="container">
-                    <div class="profile-header">
-                        <div class="profile-avatar">
-                            <div class="avatar-placeholder">👤</div>
-                        </div>
-                        <div class="profile-info">
-                            <h1 id="userName">Willkommen zurück!</h1>
-                            <p id="userEmailDisplay"></p>
-                            <div class="profile-stats">
-                                <div class="stat">
-                                    <span class="stat-number" id="beerCount">0</span>
-                                    <span class="stat-label">Kölsch getrunken</span>
-                                </div>
-                                <div class="stat">
-                                    <span class="stat-number" id="friendsCount">0</span>
-                                    <span class="stat-label">Freunde</span>
-                                </div>
-                                <div class="stat">
-                                    <span class="stat-number" id="locationsCount">0</span>
-                                    <span class="stat-label">Locations besucht</span>
+            <section class="py-16 px-4">
+                <div class="max-w-6xl mx-auto">
+                    <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-8 shadow-2xl mb-8">
+                        <div class="flex items-center gap-8">
+                            <div class="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center text-4xl border-4 border-koelsch-red">
+                                👤
+                            </div>
+                            <div class="flex-1">
+                                <h1 id="userName" class="text-3xl font-bold text-koelsch-red mb-2">Willkommen zurück!</h1>
+                                <p id="userEmailDisplay" class="text-gray-400 text-lg mb-6"></p>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div class="bg-white/5 rounded-xl p-4 text-center">
+                                        <div id="beerCount" class="text-2xl font-bold text-koelsch-red mb-1">0</div>
+                                        <div class="text-sm text-gray-400">Kölsch getrunken</div>
+                                    </div>
+                                    <div class="bg-white/5 rounded-xl p-4 text-center">
+                                        <div id="friendsCount" class="text-2xl font-bold text-koelsch-red mb-1">0</div>
+                                        <div class="text-sm text-gray-400">Freunde</div>
+                                    </div>
+                                    <div class="bg-white/5 rounded-xl p-4 text-center">
+                                        <div id="locationsCount" class="text-2xl font-bold text-koelsch-red mb-1">0</div>
+                                        <div class="text-sm text-gray-400">Locations besucht</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="profile-actions">
-                        <h2>App-Features</h2>
-                        <p>Für alle erweiterten Features nutze bitte die 11Kölsch iOS App:</p>
+                    <div class="text-center mb-12">
+                        <h2 class="text-2xl font-bold text-koelsch-red mb-4">App-Features</h2>
+                        <p class="text-gray-400 text-lg">Für alle erweiterten Features nutze bitte die 11Kölsch iOS App:</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                        <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-6 text-center hover:-translate-y-2 transition-all duration-300">
+                            <div class="text-4xl mb-4">🗺️</div>
+                            <h3 class="text-lg font-semibold text-koelsch-red mb-2">Kölsch-Locations</h3>
+                            <p class="text-gray-400 text-sm mb-4">Finde die besten Kölsch-Locations in deiner Nähe</p>
+                            <button onclick="openApp('map')" class="w-full bg-koelsch-red hover:bg-red-600 text-white py-2 px-4 rounded-lg font-semibold transition-all duration-300">In App öffnen</button>
+                        </div>
                         
-                        <div class="app-features">
-                            <div class="feature-card">
-                                <div class="feature-icon">🗺️</div>
-                                <h3>Kölsch-Locations</h3>
-                                <p>Finde die besten Kölsch-Locations in deiner Nähe</p>
-                                <button class="btn-primary" onclick="openApp('map')">In App öffnen</button>
-                            </div>
-                            
-                            <div class="feature-card">
-                                <div class="feature-icon">👥</div>
-                                <h3>Freunde & Community</h3>
-                                <p>Verbinde dich mit anderen Kölsch-Liebhabern</p>
-                                <button class="btn-primary" onclick="openApp('friends')">In App öffnen</button>
-                            </div>
-                            
-                            <div class="feature-card">
-                                <div class="feature-icon">📊</div>
-                                <h3>Detaillierte Statistiken</h3>
-                                <p>Verfolge deine Kölsch-Journey mit detaillierten Analysen</p>
-                                <button class="btn-primary" onclick="openApp('stats')">In App öffnen</button>
-                            </div>
-                            
-                            <div class="feature-card">
-                                <div class="feature-icon">🏆</div>
-                                <h3>Achievements</h3>
-                                <p>Sammle Abzeichen und erreiche Meilensteine</p>
-                                <button class="btn-primary" onclick="openApp('achievements')">In App öffnen</button>
-                            </div>
+                        <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-6 text-center hover:-translate-y-2 transition-all duration-300">
+                            <div class="text-4xl mb-4">👥</div>
+                            <h3 class="text-lg font-semibold text-koelsch-red mb-2">Freunde & Community</h3>
+                            <p class="text-gray-400 text-sm mb-4">Verbinde dich mit anderen Kölsch-Liebhabern</p>
+                            <button onclick="openApp('friends')" class="w-full bg-koelsch-red hover:bg-red-600 text-white py-2 px-4 rounded-lg font-semibold transition-all duration-300">In App öffnen</button>
                         </div>
-
-                        <div class="app-download">
-                            <h3>App herunterladen</h3>
-                            <p>Falls du die App noch nicht hast:</p>
-                            <button class="btn-primary btn-large" onclick="downloadIOS()">iOS App herunterladen</button>
+                        
+                        <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-6 text-center hover:-translate-y-2 transition-all duration-300">
+                            <div class="text-4xl mb-4">📊</div>
+                            <h3 class="text-lg font-semibold text-koelsch-red mb-2">Detaillierte Statistiken</h3>
+                            <p class="text-gray-400 text-sm mb-4">Verfolge deine Kölsch-Journey mit detaillierten Analysen</p>
+                            <button onclick="openApp('stats')" class="w-full bg-koelsch-red hover:bg-red-600 text-white py-2 px-4 rounded-lg font-semibold transition-all duration-300">In App öffnen</button>
+                        </div>
+                        
+                        <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-6 text-center hover:-translate-y-2 transition-all duration-300">
+                            <div class="text-4xl mb-4">🏆</div>
+                            <h3 class="text-lg font-semibold text-koelsch-red mb-2">Achievements</h3>
+                            <p class="text-gray-400 text-sm mb-4">Sammle Abzeichen und erreiche Meilensteine</p>
+                            <button onclick="openApp('achievements')" class="w-full bg-koelsch-red hover:bg-red-600 text-white py-2 px-4 rounded-lg font-semibold transition-all duration-300">In App öffnen</button>
                         </div>
                     </div>
 
-                    <div class="profile-settings">
-                        <h3>Account-Einstellungen</h3>
-                        <div class="settings-actions">
-                            <button class="btn-secondary" onclick="changePassword()">Passwort ändern</button>
-                            <button class="btn-secondary" onclick="logout()">Abmelden</button>
+                    <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-8 text-center mb-8">
+                        <h3 class="text-xl font-bold text-koelsch-red mb-4">App herunterladen</h3>
+                        <p class="text-gray-400 mb-6">Falls du die App noch nicht hast:</p>
+                        <button onclick="downloadIOS()" class="bg-koelsch-red hover:bg-red-600 text-white py-4 px-8 rounded-lg font-semibold text-lg transition-all duration-300 hover:-translate-y-1">iOS App herunterladen</button>
+                    </div>
+
+                    <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-8 text-center">
+                        <h3 class="text-xl font-bold text-koelsch-red mb-6">Account-Einstellungen</h3>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <button onclick="changePassword()" class="bg-koelsch-gray hover:bg-gray-600 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-300">Passwort ändern</button>
+                            <button onclick="logout()" class="bg-koelsch-gray hover:bg-gray-600 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-300">Abmelden</button>
                         </div>
                     </div>
                 </div>
@@ -178,12 +206,12 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2024 11Kölsch. Alle Rechte vorbehalten.</p>
-                <p><a href="mailto:support@11koelsch.de">support@11koelsch.de</a></p>
-            </div>
+    <footer class="bg-black/90 border-t border-white/10 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-400 mb-2">&copy; 2024 11Kölsch. Alle Rechte vorbehalten.</p>
+            <p class="text-gray-400">
+                <a href="mailto:support@11koelsch.de" class="text-koelsch-red hover:text-red-400 transition-colors duration-300">support@11koelsch.de</a>
+            </p>
         </div>
     </footer>
 
