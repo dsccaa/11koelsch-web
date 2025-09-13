@@ -3,186 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Mail bestätigt - 11Kölsch</title>
+    <title>11Kölsch - Bier trinken mit Freunden</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <meta name="theme-color" content="#ff4444">
+    <meta name="description" content="11Kölsch - Die ultimative App für Kölsch-Liebhaber. Bier trinken mit Freunden.">
 </head>
 <body>
-    <div class="container">
-        <div class="confirmation-card">
-            <!-- Logo -->
-            <div class="logo">
-                <h1>11Kölsch</h1>
-                <div class="beer-icon">🍺</div>
-            </div>
-
-            <!-- Success Message -->
-            <div class="success-message" id="successMessage" style="display: none;">
-                <div class="success-icon">✅</div>
-                <h2>E-Mail erfolgreich bestätigt!</h2>
-                <p>Willkommen bei 11Kölsch! Dein Konto wurde erfolgreich aktiviert.</p>
-                <div class="actions">
-                    <button onclick="openApp()" class="btn-primary">App öffnen</button>
-                    <button onclick="goToLogin()" class="btn-secondary">Zur Anmeldung</button>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">11Kölsch</div>
+                <div class="nav-buttons" id="navButtons">
+                    <button class="btn-primary" id="loginBtn">Anmelden</button>
+                    <button class="btn-secondary" id="registerBtn">Registrieren</button>
                 </div>
-            </div>
-
-            <!-- Error Message -->
-            <div class="error-message" id="errorMessage" style="display: none;">
-                <div class="error-icon">❌</div>
-                <h2>Bestätigung fehlgeschlagen</h2>
-                <p id="errorText">Es gab ein Problem bei der E-Mail-Bestätigung.</p>
-                <div class="actions">
-                    <button onclick="retryConfirmation()" class="btn-primary">Erneut versuchen</button>
-                    <button onclick="goToLogin()" class="btn-secondary">Zur Anmeldung</button>
-                </div>
-            </div>
-
-            <!-- Loading Message -->
-            <div class="loading-message" id="loadingMessage">
-                <div class="spinner"></div>
-                <h2>E-Mail wird bestätigt...</h2>
-                <p>Bitte warten, während wir deine E-Mail-Adresse bestätigen.</p>
-            </div>
-
-            <!-- Manual Code Input -->
-            <div class="manual-code" id="manualCode" style="display: none;">
-                <h3>Bestätigungscode eingeben</h3>
-                <p>Falls der automatische Bestätigungslink nicht funktioniert hat, gib hier deinen Bestätigungscode ein:</p>
-                <div class="code-input">
-                    <input type="text" id="confirmationCode" placeholder="6-stelliger Code" maxlength="6">
-                    <button onclick="confirmWithCode()" class="btn-primary">Bestätigen</button>
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <span id="userEmail"></span>
+                    <button class="btn-secondary" onclick="logout()">Abmelden</button>
                 </div>
             </div>
         </div>
+    </header>
 
-        <!-- Footer -->
-        <div class="footer">
-            <p>© 2025 11Kölsch - Kölsch Trink-App</p>
-            <p>Bei Problemen kontaktiere uns unter: support@11koelsch.de</p>
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Public Content (for non-logged users) -->
+        <div id="publicContent">
+            <section class="auth-section">
+                <div class="container">
+                    <div class="auth-card">
+                        <div class="app-title">11Kölsch</div>
+                        <div class="app-slogan">Bier trinken mit Freunden</div>
+                        
+                        <!-- Login Form -->
+                        <form id="loginForm" class="auth-form">
+                            <div class="form-group">
+                                <label for="loginEmail">E-Mail</label>
+                                <input type="email" id="loginEmail" placeholder="ihre@email.de" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="loginPassword">Passwort</label>
+                                <input type="password" id="loginPassword" placeholder="Passwort" required>
+                            </div>
+                            <div class="auth-buttons">
+                                <button type="submit" class="btn-login">Anmelden</button>
+                                <button type="button" class="btn-register" onclick="showRegisterForm()">Registrieren</button>
+                            </div>
+                        </form>
+
+                        <!-- Register Form -->
+                        <form id="registerForm" class="auth-form" style="display: none;">
+                            <div class="form-group">
+                                <label for="registerEmail">E-Mail</label>
+                                <input type="email" id="registerEmail" placeholder="ihre@email.de" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="registerPassword">Passwort</label>
+                                <input type="password" id="registerPassword" placeholder="Passwort" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="registerConfirmPassword">Passwort bestätigen</label>
+                                <input type="password" id="registerConfirmPassword" placeholder="Passwort bestätigen" required>
+                            </div>
+                            <div class="auth-buttons">
+                                <button type="submit" class="btn-register">Registrieren</button>
+                                <button type="button" class="btn-login" onclick="showLoginForm()">Anmelden</button>
+                            </div>
+                        </form>
+
+                        <div class="legal-text">
+                            Mit der Anmeldung akzeptierst du unsere <a href="#" onclick="showTerms()">Nutzungsbedingungen</a> und <a href="#" onclick="showPrivacy()">Datenschutz</a>.
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </div>
 
-    <script>
-        // Supabase-Konfiguration
-        const supabaseUrl = 'https://nrkjjukeracgbpvwbjam.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ya2pqdWtlcmFjZ2JwdndiamFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYwNTU2OTAsImV4cCI6MjA3MTYzMTY5MH0.9NtxeNVLNwcTSgNq6ug1aedvvz9oBC3SqRB3sahkhEU';
-        
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        <!-- User Profile Content (for logged users) -->
+        <div id="userContent" style="display: none;">
+            <section class="profile-section">
+                <div class="container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <div class="avatar-placeholder">👤</div>
+                        </div>
+                        <div class="profile-info">
+                            <h1 id="userName">Willkommen zurück!</h1>
+                            <p id="userEmailDisplay"></p>
+                            <div class="profile-stats">
+                                <div class="stat">
+                                    <span class="stat-number" id="beerCount">0</span>
+                                    <span class="stat-label">Kölsch getrunken</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number" id="friendsCount">0</span>
+                                    <span class="stat-label">Freunde</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number" id="locationsCount">0</span>
+                                    <span class="stat-label">Locations besucht</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-        // URL-Parameter extrahieren
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-        const type = urlParams.get('type');
+                    <div class="profile-actions">
+                        <h2>App-Features</h2>
+                        <p>Für alle erweiterten Features nutze bitte die 11Kölsch iOS App:</p>
+                        
+                        <div class="app-features">
+                            <div class="feature-card">
+                                <div class="feature-icon">🗺️</div>
+                                <h3>Kölsch-Locations</h3>
+                                <p>Finde die besten Kölsch-Locations in deiner Nähe</p>
+                                <button class="btn-primary" onclick="openApp('map')">In App öffnen</button>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">👥</div>
+                                <h3>Freunde & Community</h3>
+                                <p>Verbinde dich mit anderen Kölsch-Liebhabern</p>
+                                <button class="btn-primary" onclick="openApp('friends')">In App öffnen</button>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">📊</div>
+                                <h3>Detaillierte Statistiken</h3>
+                                <p>Verfolge deine Kölsch-Journey mit detaillierten Analysen</p>
+                                <button class="btn-primary" onclick="openApp('stats')">In App öffnen</button>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">🏆</div>
+                                <h3>Achievements</h3>
+                                <p>Sammle Abzeichen und erreiche Meilensteine</p>
+                                <button class="btn-primary" onclick="openApp('achievements')">In App öffnen</button>
+                            </div>
+                        </div>
 
-        // Beim Laden der Seite
-        document.addEventListener('DOMContentLoaded', function() {
-            if (token && type === 'signup') {
-                confirmEmail(token);
-            } else {
-                showManualCode();
-            }
-        });
+                        <div class="app-download">
+                            <h3>App herunterladen</h3>
+                            <p>Falls du die App noch nicht hast:</p>
+                            <button class="btn-primary btn-large" onclick="downloadIOS()">iOS App herunterladen</button>
+                        </div>
+                    </div>
 
-        // E-Mail bestätigen
-        async function confirmEmail(token) {
-            try {
-                const { data, error } = await supabase.auth.verifyOtp({
-                    token: token,
-                    type: 'signup'
-                });
+                    <div class="profile-settings">
+                        <h3>Account-Einstellungen</h3>
+                        <div class="settings-actions">
+                            <button class="btn-secondary" onclick="changePassword()">Passwort ändern</button>
+                            <button class="btn-secondary" onclick="logout()">Abmelden</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
 
-                if (error) {
-                    throw error;
-                }
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 11Kölsch. Alle Rechte vorbehalten.</p>
+                <p><a href="mailto:support@11koelsch.de">support@11koelsch.de</a></p>
+            </div>
+        </div>
+    </footer>
 
-                // Erfolg
-                showSuccess();
-                
-                // Optional: User-Informationen anzeigen
-                if (data.user) {
-                    console.log('User bestätigt:', data.user.email);
-                }
-
-            } catch (error) {
-                console.error('Bestätigungsfehler:', error);
-                showError(error.message);
-            }
-        }
-
-        // Mit Code bestätigen
-        async function confirmWithCode() {
-            const code = document.getElementById('confirmationCode').value;
-            
-            if (!code || code.length !== 6) {
-                showError('Bitte gib einen 6-stelligen Code ein.');
-                return;
-            }
-
-            try {
-                const { data, error } = await supabase.auth.verifyOtp({
-                    token: code,
-                    type: 'signup'
-                });
-
-                if (error) {
-                    throw error;
-                }
-
-                showSuccess();
-
-            } catch (error) {
-                console.error('Bestätigungsfehler:', error);
-                showError(error.message);
-            }
-        }
-
-        // Erfolg anzeigen
-        function showSuccess() {
-            document.getElementById('loadingMessage').style.display = 'none';
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('manualCode').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'block';
-        }
-
-        // Fehler anzeigen
-        function showError(message) {
-            document.getElementById('loadingMessage').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'none';
-            document.getElementById('manualCode').style.display = 'none';
-            document.getElementById('errorMessage').style.display = 'block';
-            document.getElementById('errorText').textContent = message;
-        }
-
-        // Manuellen Code anzeigen
-        function showManualCode() {
-            document.getElementById('loadingMessage').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'none';
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('manualCode').style.display = 'block';
-        }
-
-        // App öffnen
-        function openApp() {
-            // Versuche die App zu öffnen
-            const appUrl = '11koelsch://confirm';
-            window.location.href = appUrl;
-            
-            // Fallback: Nach 2 Sekunden zur Website
-            setTimeout(() => {
-                window.location.href = 'https://11koelsch.de';
-            }, 2000);
-        }
-
-        // Zur Anmeldung
-        function goToLogin() {
-            window.location.href = 'https://11koelsch.de/login';
-        }
-
-        // Erneut versuchen
-        function retryConfirmation() {
-            window.location.reload();
-        }
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
